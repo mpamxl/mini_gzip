@@ -71,3 +71,4 @@ After publishing `mini_gzip` on HackerNews, byuu (http://byuu.org/) mentioned he
 
 - Wojciech Adam Koszek, [wojciech@koszek.com](mailto:wojciech@koszek.com)
 - [http://www.koszek.com](http://www.koszek.com)
+- test
