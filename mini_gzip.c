@@ -213,14 +213,16 @@ mini_gz_unpack(struct mini_gzip *gz_ptr, void *mem_out, size_t mem_out_len)
 		s.avail_in += bytes_to_read;
 		ret = mz_inflate(&s, MZ_SYNC_FLUSH);
 		in_bytes_avail -= bytes_to_read;
-		if (s.avail_out == 0 && in_bytes_avail != 0) {
-			return (-3);
+		if (s.avail_out == 0 ) {
+			break;
 		}
 		assert(ret != MZ_BUF_ERROR);
 		if (ret == MZ_PARAM_ERROR) {
+			free(mem_out);
 			return (-1);
 		}
 		if (ret == MZ_DATA_ERROR) {
+			free(mem_out);
 			return (-2);
 		}
 		if (ret == MZ_STREAM_END) {
@@ -229,6 +231,7 @@ mini_gz_unpack(struct mini_gzip *gz_ptr, void *mem_out, size_t mem_out_len)
 	}
 	ret = inflateEnd(&s);
 	if (ret != Z_OK) {
+		free(mem_out);
 		return (-4);
 	}
 	return (s.total_out);
